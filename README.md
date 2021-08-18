@@ -16,4 +16,10 @@ def poverty_scale_income_qualifies(total_monthly_income:float, household_size:in
   
   Returns None if the poverty level data JSON could not be loaded.
   """
+  
+def poverty_scale_get_income_limit(household_size:int=1, multiplier:int=1)->Union[int, None]:
+  """
+  Return the income limit matching the given household size.
+  """
+  
 ```
