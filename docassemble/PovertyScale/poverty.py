@@ -33,6 +33,6 @@ def poverty_scale_income_qualifies(total_monthly_income:float, household_size:in
   # Globals: poverty_increment and poverty_base
   if not ps_data:
     return None
-  additional_income_allowed = household_size * poverty_increment
-  household_income_limit = (poverty_base + additional_income_allowed) * multiplier
+  additional_income_allowed = household_size * int(get_poverty_scale_data().get("poverty_increment"))
+  household_income_limit = (int(get_poverty_scale_data().get("poverty_base")) + additional_income_allowed) * multiplier
   return int((household_income_limit)/12) >=  int(total_monthly_income)
