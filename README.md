@@ -9,8 +9,18 @@ income eligibility in the United States.
 
 https://github.com/codeforamerica/fplapi exists but requires a dedicated
 server, and hasn't been updated in recent years. At Suffolk we are already
-maintaining this information; it's simple for us to maintain the API alongside
-it.
+maintaining and consuming this information in multiple apps; it's simple 
+for us to maintain the API alongside it.
+
+The intent is that you will run this on your own Docassemble server, but we may maintain a public endpoint
+at some point. If you run your own Docassemble server, this allows you have one
+source of truth for both use in Docassemble interviews (without the overhead of the REST call)
+and for use in any non-Docassemble webapps you may have.
+
+## Update frequency
+
+The Federal Poverty Guidelines are updated annually, but not usually published in the federal register until a month or so into a new year.
+We will try to closely track that update timeline. Pull requests with updated figures are welcome.
 
 ## Examples
 
