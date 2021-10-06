@@ -3,6 +3,8 @@
 Poverty scale, updated approximately on an annual basis, to use for calculating
 income eligibility in the United States.
 
+[Just get the JSON file](https://github.com/SuffolkLITLab/docassemble-PovertyScale/blob/main/docassemble/PovertyScale/data/sources/federal_poverty_scale.json)
+
 ## Justification
 
 https://github.com/codeforamerica/fplapi exists but requires a dedicated
@@ -14,7 +16,7 @@ it.
 
 See example and demo in demo_poverty_scale.yml
 
-This package contains a JSON file, poverty.json, which can be referenced directly,
+This package contains a JSON file, [federal_poverty_scale.json](https://github.com/SuffolkLITLab/docassemble-PovertyScale/blob/main/docassemble/PovertyScale/data/sources/federal_poverty_scale.json), which can be referenced directly,
 as well as a module poverty.py which exports `poverty_scale_income_qualifies`
 
 ## REST API
