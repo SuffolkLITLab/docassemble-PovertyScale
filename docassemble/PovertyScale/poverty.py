@@ -22,15 +22,18 @@ def get_poverty_guidelines():
     return Response("{'error': 'Unable to load poverty guidelines from disk.'}", status=503, mimetype="application/json")
 
 @app.route("/poverty_guidelines/household_size/<household_size>", methods=['GET'])
-def get_household_poverty_guideline(household_size):
+def get_household_poverty_guideline(household_size:int):
   if (request.args) and str(request.args.get('state')).lower() in ['ak','hi']:
     state = str(request.args.get('state')).lower()
   else:
     state = None
   if (request.args) and request.args.get('multiplier'):
-    multiplier = int(request.args.get('multiplier'))
+    try:      
+      multiplier = float(request.args.get('multiplier'))
+    except :
+      multiplier = 1.0
   else:
-    multiplier = 1
+    multiplier = 1.0
   results = poverty_scale_get_income_limit(int(household_size), multiplier=multiplier, state=state)
   ps_data = get_poverty_scale_data()
   if isinstance(ps_data, dict):
@@ -43,7 +46,7 @@ def get_household_poverty_guideline(household_size):
     return Response("{'error': 'Unable to retrieve poverty guidelines.'}", status=503, mimetype="application/json")
 
 @app.route("/poverty_guidelines/qualifies/household_size/<household_size>", methods=['GET'])
-def get_household_qualifies(household_size):
+def get_household_qualifies(household_size:int):
   if not request.args or not request.args.get('income'):
     return Response("{'error': 'Income is required'}", 400, mimetype="application/json")
   try:
@@ -55,9 +58,12 @@ def get_household_qualifies(household_size):
   else:
     state = None
   if request.args.get('multiplier'):
-    multiplier = int(request.args.get('multiplier'))
+    try:      
+      multiplier = float(request.args.get('multiplier'))
+    except :
+      multiplier = 1.0
   else:
-    multiplier = 1
+    multiplier = 1.0
   results = poverty_scale_income_qualifies(income, int(household_size), multiplier=multiplier, state=state)
   ps_data = get_poverty_scale_data()
   if isinstance(ps_data, dict):
@@ -81,7 +87,7 @@ def get_poverty_scale_data():
   
   return ps_data
 
-def poverty_scale_get_income_limit(household_size:int=1, multiplier:int=1, state=None)->Union[int, None]:
+def poverty_scale_get_income_limit(household_size:int=1, multiplier:float=1.0, state=None)->Union[int, None]:
   """
   Return the income limit matching the given household size.
   """
@@ -100,9 +106,9 @@ def poverty_scale_get_income_limit(household_size:int=1, multiplier:int=1, state
   additional_income_allowed = household_size * poverty_increment
   household_income_limit = (poverty_base + additional_income_allowed) * multiplier
   
-  return household_income_limit
+  return int(household_income_limit)
 
-def poverty_scale_income_qualifies(total_monthly_income:float, household_size:int=1, multiplier:int=1, state=None)->Union[bool,None]:
+def poverty_scale_income_qualifies(total_monthly_income:float, household_size:int=1, multiplier:float=1.0, state=None)->Union[bool,None]:
   """
   Given monthly income, household size, and an optional multiplier, return whether an individual
   is at or below the federal poverty level.
