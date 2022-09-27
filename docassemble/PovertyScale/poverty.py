@@ -1,10 +1,7 @@
-# pre-load
 import json
-import sys
-from docassemble.webapp.app_object import app
-from docassemble.base.util import path_and_mimetype, log
 from typing import Union
-from flask import jsonify, request, Response
+from pathlib import Path
+from docassemble.base.util import path_and_mimetype, log
 
 __all__ = ['poverty_scale_income_qualifies',
            'get_poverty_scale_data',
@@ -13,71 +10,12 @@ __all__ = ['poverty_scale_income_qualifies',
 
 ps_poverty_scale_json_path = path_and_mimetype(f"{__package__}:data/sources/federal_poverty_scale.json")[0]
 
-@app.route("/poverty_guidelines", methods=['GET'])
-def get_poverty_guidelines():
-  results = get_poverty_scale_data()
-  if results:
-    return jsonify(results)
-  else:
-    return Response("{'error': 'Unable to load poverty guidelines from disk.'}", status=503, mimetype="application/json")
-
-@app.route("/poverty_guidelines/household_size/<household_size>", methods=['GET'])
-def get_household_poverty_guideline(household_size:int):
-  if (request.args) and str(request.args.get('state')).lower() in ['ak','hi']:
-    state = str(request.args.get('state')).lower()
-  else:
-    state = None
-  if (request.args) and request.args.get('multiplier'):
-    try:      
-      multiplier = float(request.args.get('multiplier'))
-    except :
-      multiplier = 1.0
-  else:
-    multiplier = 1.0
-  results = poverty_scale_get_income_limit(int(household_size), multiplier=multiplier, state=state)
-  ps_data = get_poverty_scale_data()
-  if isinstance(ps_data, dict):
-    update_year = ps_data.get('poverty_level_update_year')
-  else:
-    update_year = -1
-  if results:
-    return jsonify({'amount': results, 'update_year': update_year})
-  else:
-    return Response("{'error': 'Unable to retrieve poverty guidelines.'}", status=503, mimetype="application/json")
-
-@app.route("/poverty_guidelines/qualifies/household_size/<household_size>", methods=['GET'])
-def get_household_qualifies(household_size:int):
-  if not request.args or not request.args.get('income'):
-    return Response("{'error': 'Income is required'}", 400, mimetype="application/json")
-  try:
-    income = int(request.args.get('income'))
-  except ValueError:
-    return Response("{'error': 'Invalid income value. Please provide an integer.'}", 400, mimetype="application/json")
-  if str(request.args.get('state')).lower() in ['ak','hi']:
-    state = str(request.args.get('state')).lower()
-  else:
-    state = None
-  if request.args.get('multiplier'):
-    try:      
-      multiplier = float(request.args.get('multiplier'))
-    except :
-      multiplier = 1.0
-  else:
-    multiplier = 1.0
-  results = poverty_scale_income_qualifies(income, int(household_size), multiplier=multiplier, state=state)
-  ps_data = get_poverty_scale_data()
-  if isinstance(ps_data, dict):
-    update_year = ps_data.get('poverty_level_update_year')
-  else:
-    update_year = -1
-  if not results is None:
-    return jsonify({'qualifies': results, 'update_year': update_year})
-  else:
-    return Response("{'error': 'Unable to retrieve poverty guidelines.'}", status=503, mimetype="application/json")  
-  
 def get_poverty_scale_data():
+  global ps_poverty_scale_json_path
   ps_data = {}
   try:
+    if ps_poverty_scale_json_path is None:
+      ps_poverty_scale_json_path = Path(__file__).parent / 'data' / 'sources' / 'federal_poverty_scale.json'
     with open(ps_poverty_scale_json_path) as f:
       ps_data = json.load(f)
   except FileNotFoundError:
@@ -103,10 +41,10 @@ def poverty_scale_get_income_limit(household_size:int=1, multiplier:float=1.0, s
   else:
     poverty_base = int(ps_data.get("poverty_base"))
     poverty_increment = int(ps_data.get("poverty_increment"))
-  additional_income_allowed = household_size * poverty_increment
+  additional_income_allowed = max(household_size - 1, 0) * poverty_increment
   household_income_limit = (poverty_base + additional_income_allowed) * multiplier
   
-  return int(household_income_limit)
+  return round(household_income_limit)
 
 def poverty_scale_income_qualifies(total_monthly_income:float, household_size:int=1, multiplier:float=1.0, state=None)->Union[bool,None]:
   """
@@ -121,4 +59,4 @@ def poverty_scale_income_qualifies(total_monthly_income:float, household_size:in
   if not household_income_limit:
     return None
   
-  return int((household_income_limit)/12) >=  int(total_monthly_income)
+  return round((household_income_limit)/12) >=  int(total_monthly_income)
