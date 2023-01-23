@@ -30,7 +30,7 @@ class test_recreate_tables(unittest.TestCase):
         self.assertEqual(poverty_scale_get_income_limit(4, state="AK"), 37500)
         self.assertEqual(poverty_scale_get_income_limit(5, state="AK"), 43930)
         self.assertEqual(poverty_scale_get_income_limit(6, state="AK"), 50360)
-        self.assertEqual(poverty_scale_get_income_limit(7, state="AK"), 59790)
+        self.assertEqual(poverty_scale_get_income_limit(7, state="AK"), 56790)
         self.assertEqual(poverty_scale_get_income_limit(8, state="AK"), 63220)
 
 
