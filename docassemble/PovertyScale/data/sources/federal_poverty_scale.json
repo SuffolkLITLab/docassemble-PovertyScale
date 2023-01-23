@@ -1,9 +1,9 @@
 {
-  "poverty_level_update_year": 2022,
-  "poverty_base": 13590,
-  "poverty_increment": 4720,
-  "poverty_base_hi": 15630,
-  "poverty_increment_hi": 5430,
-  "poverty_base_ak": 16990,
-  "poverty_increment_ak": 5900
+  "poverty_level_update_year": 2023,
+  "poverty_base": 14580,
+  "poverty_increment": 5140,
+  "poverty_base_hi": 16770,
+  "poverty_increment_hi": 5910,
+  "poverty_base_ak": 18210,
+  "poverty_increment_ak": 6430
 }
