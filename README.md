@@ -1,5 +1,7 @@
 # PovertyScale
 
+[![PyPI version](https://badge.fury.io/py/docassemble.PovertyScale.svg)](https://badge.fury.io/py/docassemble.PovertyScale)
+
 Poverty scale, updated approximately on an annual basis, to use for calculating
 income eligibility in the United States.
 
