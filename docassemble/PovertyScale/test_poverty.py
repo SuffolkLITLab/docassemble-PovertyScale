@@ -5,14 +5,14 @@ from .poverty import poverty_scale_get_income_limit, poverty_scale_income_qualif
 class TestRecreateTables(unittest.TestCase):
     def test_MA_100_table(self):
         # 48 Contiguous States and DC 2025 Poverty Guidelines
-        self.assertEqual(poverty_scale_get_income_limit(1), 15650)
-        self.assertEqual(poverty_scale_get_income_limit(2), 15650 + 5500)   # 21,150
-        self.assertEqual(poverty_scale_get_income_limit(3), 15650 + 5500 * 2)  # 26,650
-        self.assertEqual(poverty_scale_get_income_limit(4), 15650 + 5500 * 3)  # 32,150
-        self.assertEqual(poverty_scale_get_income_limit(5), 15650 + 5500 * 4)  # 37,650
-        self.assertEqual(poverty_scale_get_income_limit(6), 15650 + 5500 * 5)  # 43,150
-        self.assertEqual(poverty_scale_get_income_limit(7), 15650 + 5500 * 6)  # 48,650
-        self.assertEqual(poverty_scale_get_income_limit(8), 15650 + 5500 * 7)  # 54,150
+        self.assertEqual(poverty_scale_get_income_limit(1), 15960)
+        self.assertEqual(poverty_scale_get_income_limit(2), 15960 + 5680)   # 21,640
+        self.assertEqual(poverty_scale_get_income_limit(3), 15960 + 5680 * 2)  # 27,320
+        self.assertEqual(poverty_scale_get_income_limit(4), 15960 + 5680 * 3)  # 33,000
+        self.assertEqual(poverty_scale_get_income_limit(5), 15960 + 5680 * 4)  # 38,680
+        self.assertEqual(poverty_scale_get_income_limit(6), 15960 + 5680 * 5)  # 44,360
+        self.assertEqual(poverty_scale_get_income_limit(7), 15960 + 5680 * 6)  # 50,040
+        self.assertEqual(poverty_scale_get_income_limit(8), 15960 + 5680 * 7)  # 55,720
 
     def test_MA_125_table(self):
         multiplier = 1.25
@@ -52,14 +52,14 @@ class TestRecreateTables(unittest.TestCase):
 
     def test_AK_100_table(self):
         # Alaska 2025 Poverty Guidelines
-        self.assertEqual(poverty_scale_get_income_limit(1, state="AK"), 19550)
-        self.assertEqual(poverty_scale_get_income_limit(2, state="AK"), 19550 + 6880)   # 26,430
-        self.assertEqual(poverty_scale_get_income_limit(3, state="AK"), 19550 + 6880 * 2)  # 33,310
-        self.assertEqual(poverty_scale_get_income_limit(4, state="AK"), 19550 + 6880 * 3)  # 40,190
-        self.assertEqual(poverty_scale_get_income_limit(5, state="AK"), 19550 + 6880 * 4)  # 47,070
-        self.assertEqual(poverty_scale_get_income_limit(6, state="AK"), 19550 + 6880 * 5)  # 53,950
-        self.assertEqual(poverty_scale_get_income_limit(7, state="AK"), 19550 + 6880 * 6)  # 60,830
-        self.assertEqual(poverty_scale_get_income_limit(8, state="AK"), 19550 + 6880 * 7)  # 67,710
+        self.assertEqual(poverty_scale_get_income_limit(1, state="AK"), 19950)
+        self.assertEqual(poverty_scale_get_income_limit(2, state="AK"), 19950 + 7100)   # 27,050
+        self.assertEqual(poverty_scale_get_income_limit(3, state="AK"), 19950 + 7100 * 2)  # 34,150
+        self.assertEqual(poverty_scale_get_income_limit(4, state="AK"), 19950 + 7100 * 3)  # 41,250
+        self.assertEqual(poverty_scale_get_income_limit(5, state="AK"), 19950 + 7100 * 4)  # 48,350
+        self.assertEqual(poverty_scale_get_income_limit(6, state="AK"), 19950 + 7100 * 5)  # 55,450
+        self.assertEqual(poverty_scale_get_income_limit(7, state="AK"), 19950 + 7100 * 6)  # 62,550
+        self.assertEqual(poverty_scale_get_income_limit(8, state="AK"), 19950 + 7100 * 7)  # 69,650
 
     def test_AK_125_table(self):
         multiplier = 1.25
