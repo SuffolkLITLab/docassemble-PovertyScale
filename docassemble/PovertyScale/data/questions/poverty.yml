@@ -3,9 +3,9 @@ comment: |
   Federal Poverty Level
   See: https://aspe.hhs.gov/poverty-guidelines
 code: |
-  poverty_level_update = "2022"
-  poverty_base = 13590
-  poverty_increment = 4720
+  poverty_level_update = "2026"
+  poverty_base = 15960
+  poverty_increment = 5680
 ---  
 comment: |
   Multiplier specific to MA courts, for affidavit of indigency.
