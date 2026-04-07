@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docassemble.PovertyScale"
+version = "2026.0.0"
+description = "Poverty scale data and helper functions for calculating income eligibility in the United States."
+readme = "README.md"
+authors = [
+    { name="Quinten Steenhuis", email="qsteenhuis@suffolk.edu" },
+]
+dependencies = []
+license = "MIT"
+license-files = ["LICENSE*"]
+
+[project.urls]
+GitHub = "https://github.com/SuffolkLITLab/docassemble-PovertyScale"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.mypy]
+# global options
+exclude = '''(?x)(
+    ^setup.py$
+  )'''
+
+# per-module options:
+[[tool.mypy.overrides]]
+module = "docassemble.webapp.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "docassemble.base.*"
+ignore_missing_imports = true
+
+[dependency-groups]
+dev = [
+    "docassemble.base>=1.3",
+    "docassemble.webapp",
+    "mypy",
+]
