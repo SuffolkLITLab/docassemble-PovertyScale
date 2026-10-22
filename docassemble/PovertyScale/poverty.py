@@ -1,21 +1,19 @@
 import json
 from typing import Union
 from pathlib import Path
-from docassemble.base.util import path_and_mimetype, log
+from docassemble.base.util import log
 
 __all__ = ['poverty_scale_income_qualifies',
            'get_poverty_scale_data',
            'poverty_scale_get_income_limit'
           ]
 
-ps_poverty_scale_json_path = path_and_mimetype(f"{__package__}:data/sources/federal_poverty_scale.json")[0]
+# This bundled resource does not require docassemble's server-side file resolver.
+ps_poverty_scale_json_path = Path(__file__).parent / 'data' / 'sources' / 'federal_poverty_scale.json'
 
 def get_poverty_scale_data():
-  global ps_poverty_scale_json_path
   ps_data = {}
   try:
-    if ps_poverty_scale_json_path is None:
-      ps_poverty_scale_json_path = Path(__file__).parent / 'data' / 'sources' / 'federal_poverty_scale.json'
     with open(ps_poverty_scale_json_path) as f:
       ps_data = json.load(f)
   except FileNotFoundError:
