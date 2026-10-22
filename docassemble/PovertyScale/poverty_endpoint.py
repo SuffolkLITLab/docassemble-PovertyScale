@@ -3,7 +3,7 @@
 from flask import jsonify, request, Response
 from docassemble.webapp import app_object
 
-# Newer docassemble versions expose flaskapp; older versions expose app.
+# Newer docassemble versions expose flaskapp; docassemble 1.9.x exposes app.
 app = getattr(app_object, "flaskapp", None)
 if app is None:
   app = getattr(app_object, "app")
