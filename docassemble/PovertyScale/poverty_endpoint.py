@@ -1,7 +1,12 @@
 # pre-load
 
 from flask import jsonify, request, Response
-from docassemble.webapp.app_object import app
+from docassemble.webapp import app_object
+
+# Newer docassemble versions expose flaskapp; older versions expose app.
+app = getattr(app_object, "flaskapp", None)
+if app is None:
+  app = getattr(app_object, "app")
 
 from .poverty import get_poverty_scale_data, poverty_scale_get_income_limit, poverty_scale_income_qualifies
 
@@ -67,4 +72,3 @@ def get_household_qualifies(household_size:int):
     return jsonify({'qualifies': results, 'update_year': update_year})
   else:
     return Response('{"error": "Unable to retrieve poverty guidelines."}', status=503, mimetype="application/json")
-  

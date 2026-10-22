@@ -1,3 +1,5 @@
+# do not pre-load
+
 import unittest
 
 from .poverty import poverty_scale_get_income_limit, poverty_scale_income_qualifies
