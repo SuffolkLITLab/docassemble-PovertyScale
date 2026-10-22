@@ -8,6 +8,7 @@ include:
 # modules:
 #   - docassemble.PovertyScale.poverty
 ---
+id: income qualification
 mandatory: True
 question: |
   Income qualification
@@ -23,6 +24,7 @@ subquestion: |
   ${ poverty_scale_table }
 
 ---
+id: income information
 question: |
   Income information
 fields:

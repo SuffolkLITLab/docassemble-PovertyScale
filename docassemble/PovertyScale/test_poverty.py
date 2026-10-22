@@ -1,6 +1,17 @@
+# do not pre-load
+
 import unittest
+import runpy
+from unittest.mock import patch
 
 from .poverty import poverty_scale_get_income_limit, poverty_scale_income_qualifies
+
+class TestStandaloneDataLoading(unittest.TestCase):
+    def test_import_and_load_without_server_file_resolver(self):
+        with patch("docassemble.base.util.path_and_mimetype", side_effect=AttributeError("server is not initialized")) as resolver:
+            module = runpy.run_module("docassemble.PovertyScale.poverty", run_name="__standalone_test__")
+            self.assertEqual(module["poverty_scale_get_income_limit"](1), 15960)
+            resolver.assert_not_called()
 
 class TestRecreateTables(unittest.TestCase):
     def test_MA_100_table(self):

@@ -40,4 +40,5 @@ dev = [
     "docassemble.base>=1.3",
     "docassemble.webapp",
     "mypy",
+    "pytest",
 ]
